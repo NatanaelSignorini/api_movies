@@ -10,7 +10,7 @@ export class CreateUserInput {
   @IsNotEmpty({ message: 'The Password field cannot be null' })
   password: string;
 
-  @IsEnum({ message: 'The Password field cannot be null' })
+  @IsEnum({ message: 'The roles field cannot be null' })
   roles: RoleInputDTO[];
 }
 
