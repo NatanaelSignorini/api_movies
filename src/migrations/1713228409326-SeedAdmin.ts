@@ -1,6 +1,7 @@
 import { Roles } from '@apiBase/modules/roles/entities/role.entity';
 import { RolesEnum } from '@apiBase/modules/roles/enum/role.enum';
-import { Users } from '@apiBase/modules/users/entities/user.entity';
+import { Users } from '@apiBase/modules/users/entities/users.entity';
+
 import type { MigrationInterface, QueryRunner } from 'typeorm';
 
 const users = [{ email: 'admin@admin.com.br', password: 'adm@adm' }];
@@ -16,7 +17,7 @@ export class SeedAdmin1713228409326 implements MigrationInterface {
         });
         const RoleRepo = queryRunner.connection.getRepository(Roles);
         admin.roles = await RoleRepo.find({
-          where: { name: RolesEnum.SUPER_ADMIN },
+          where: { name: RolesEnum.ADMIN },
         });
         await UserRepo.save(admin);
       }),

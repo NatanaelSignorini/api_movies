@@ -1,4 +1,4 @@
-import type { Users } from '@apiBase/modules/users/entities/user.entity';
+import type { Users } from '@apiBase/modules/users/entities/users.entity';
 import { UsersService } from '@apiBase/modules/users/users.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';

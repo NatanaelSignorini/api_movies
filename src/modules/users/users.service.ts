@@ -10,9 +10,9 @@ import { Repository } from 'typeorm';
 
 import type { BaseInputWhere } from '../bases/dto/base.input';
 import * as consts from './../../common/constants/error.constants';
-import type { CreateUserInput } from './dto/create-user.input';
-import type { UpdateUserInput } from './dto/update-user.input';
-import { Users } from './entities/user.entity';
+import type { CreateUserInput } from './dto/create-user.input.dto';
+import type { UpdateUserInput } from './dto/update-user.input.dto';
+import { Users } from './entities/users.entity';
 
 @Injectable()
 export class UsersService {

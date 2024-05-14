@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   api:
-    container_name: base_api
+    container_name: api_movies
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,9 +19,19 @@ services:
       - backend
     depends_on:
       - postgres
+      - redis
+
+  redis:
+    container_name: redis_api_movies
+    image: redis
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass redis
+    networks:
+      - backend
 
   postgres:
-    container_name: base_db
+    container_name: base_api_movies_db
     image: postgres:16-alpine
     networks:
       - backend

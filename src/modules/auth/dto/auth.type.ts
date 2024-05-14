@@ -1,4 +1,4 @@
-import type { Users } from '@apiBase/modules/users/entities/user.entity';
+import type { Users } from '@apiBase/modules/users/entities/users.entity';
 import { IsBoolean, IsString } from 'class-validator';
 
 export class AuthType {

@@ -6,6 +6,7 @@ import { DataBaseConfig } from './config/dataBaseConfig';
 import { RolesModule } from './modules/roles/roles.module';
 
 import { AuthModule } from './modules/auth/auth.module';
+import { MoviesModule } from './modules/movies/movies.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     RolesModule,
     UsersModule,
+    MoviesModule,
   ],
   controllers: [],
   providers: [],

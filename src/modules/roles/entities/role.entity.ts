@@ -1,5 +1,6 @@
 import { BaseEntity } from '@apiBase/modules/bases/entities/base.entity';
-import { Users } from '@apiBase/modules/users/entities/user.entity';
+
+import { Users } from '@apiBase/modules/users/entities/users.entity';
 import { Column, Entity, ManyToMany } from 'typeorm';
 import { RolesEnum } from '../enum/role.enum';
 
