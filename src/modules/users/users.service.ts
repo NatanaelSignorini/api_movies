@@ -44,13 +44,17 @@ export class UsersService {
   }
 
   async createUser(data: CreateUserInput): Promise<UserDTO> {
+    console.log('data', data);
     const foundUser = await this.userRepository.findOne({
       where: [{ email: data.email }],
     });
     if (foundUser) {
       throw new UnauthorizedException(consts.USER_EXIST);
     }
-    const user: Users = this.userRepository.create({ ...data });
+    const user: Users = this.userRepository.create({
+      ...data,
+      roles: data.roles,
+    });
     const userSaved = await this.userRepository.save(user);
     if (!userSaved) {
       throw new InternalServerErrorException(

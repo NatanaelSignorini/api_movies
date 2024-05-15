@@ -20,12 +20,12 @@ export class Users extends BaseEntity {
   lastLogin?: Date;
 
   @Column({
-    name: 'role',
+    name: 'roles',
     type: 'enum',
     enum: RolesEnum,
-    nullable: true,
+    nullable: false,
   })
-  role: RolesEnum;
+  roles: RolesEnum;
 
   @BeforeInsert()
   emailToLowerCase(): void {

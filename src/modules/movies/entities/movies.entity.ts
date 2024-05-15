@@ -23,7 +23,7 @@ export class Movies extends BaseEntity {
     name: 'genre',
     type: 'enum',
     enum: GenreEnum,
-    nullable: false,
+    nullable: true,
   })
   genre?: GenreEnum[];
 

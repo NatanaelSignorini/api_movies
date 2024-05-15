@@ -14,6 +14,21 @@ import { UsersModule } from './modules/users/users.module';
       imports: [ConfigModule],
       useClass: DataBaseConfig,
     }),
+    // CacheModule.registerAsync({
+    //   isGlobal: true,
+    //   imports: [ConfigModule],
+    //   useFactory: async (config) => {
+    //     const store = await redisStore({
+    //       ttl: 30 * 1000,
+    //       socket: {
+    //         host: config.get('REDIS_HOST'),
+    //         port: config.get('REDIS_PORT'),
+    //       },
+    //     });
+    //     return { store };
+    //   },
+    //   inject: [ConfigService],
+    // }),
     AuthModule,
     UsersModule,
     MoviesModule,

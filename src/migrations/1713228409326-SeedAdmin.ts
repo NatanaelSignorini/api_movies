@@ -15,7 +15,7 @@ export class SeedAdmin1713228409326 implements MigrationInterface {
           password: user.password,
         });
 
-        admin.role = RolesEnum.ADMIN;
+        admin.roles = RolesEnum.ADMIN;
         await UserRepo.save(admin);
       }),
     );

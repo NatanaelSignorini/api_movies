@@ -22,14 +22,14 @@ export class CreateMovieInput {
   @ApiPropertyOptional({ description: 'movie runtime', example: '100 min' })
   runtime?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'movie genre',
     example: 'Action, Adventure',
-    enumName: 'GenreEnum',
+    // enumName: 'GenreEnum',
     enum: GenreEnum,
   })
   @IsNotEmpty({ message: 'The genre field cannot be null' })
-  genre: GenreEnum[];
+  genre?: GenreEnum[];
 
   @ApiPropertyOptional({ description: 'movie director', example: 'Tim Burton' })
   director?: string;
