@@ -12,6 +12,7 @@ import type { BaseInputWhere } from '../bases/dto/base.input';
 import * as consts from './../../common/constants/error.constants';
 import type { CreateUserInput } from './dto/create-user.input.dto';
 import type { UpdateUserInput } from './dto/update-user.input.dto';
+import type { UserDTO } from './dto/user.dto';
 import { Users } from './entities/users.entity';
 
 @Injectable()
@@ -29,12 +30,12 @@ export class UsersService {
     return data;
   }
 
-  async findAllUsers(): Promise<Users[]> {
+  async findAllUsers(): Promise<UserDTO[]> {
     const users = await this.userRepository.find();
     return users;
   }
 
-  async getUserById(id: string): Promise<Users> {
+  async getUserById(id: string): Promise<UserDTO> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
       throw new NotFoundException(consts.USER_NOT_FOUND);
@@ -42,7 +43,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(data: CreateUserInput): Promise<Users> {
+  async createUser(data: CreateUserInput): Promise<UserDTO> {
     const foundUser = await this.userRepository.findOne({
       where: [{ email: data.email }],
     });
@@ -56,10 +57,11 @@ export class UsersService {
         'Problem to create a user. Try again',
       );
     }
+
     return userSaved;
   }
 
-  async updateUser(id: string, data: UpdateUserInput): Promise<Users> {
+  async updateUser(id: string, data: UpdateUserInput): Promise<UserDTO> {
     const foundUser: Users = await this.userRepository.findOne({
       where: { id },
     });

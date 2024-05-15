@@ -27,7 +27,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   private async getUser(id: string) {
     const user = await this.userService.userRepository
       .createQueryBuilder('user')
-      .leftJoinAndSelect('user.roles', 'role')
       .where('user.id = :id', { id })
       .getOne();
 

@@ -1,7 +1,7 @@
 import { encodePassword } from '@apiBase/common/decorators/encode-password';
 import { BaseEntity } from '@apiBase/modules/bases/entities/base.entity';
-import { Roles } from '@apiBase/modules/roles/entities/role.entity';
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
+import { RolesEnum } from '../enum/role.enum';
 
 @Entity()
 export class Users extends BaseEntity {
@@ -19,12 +19,13 @@ export class Users extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   lastLogin?: Date;
 
-  @ManyToMany(() => Roles, (roles) => roles.users, {
-    nullable: false,
-    eager: true,
+  @Column({
+    name: 'role',
+    type: 'enum',
+    enum: RolesEnum,
+    nullable: true,
   })
-  @JoinTable()
-  roles: Roles[];
+  role: RolesEnum;
 
   @BeforeInsert()
   emailToLowerCase(): void {
