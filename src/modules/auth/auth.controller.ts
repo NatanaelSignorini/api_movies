@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
-import { CurrentUser } from '@apiBase/common/decorators/currentUser.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { UserDTO } from '../users/dto/user.dto';
 import { AuthService } from './auth.service';
 import { AuthInput } from './dto/auth.input';
@@ -14,11 +14,7 @@ export class AuthController {
   @Post('authenticated')
   @ApiOperation({ summary: 'Login' })
   public async authenticated(@Body() data: AuthInput): Promise<AuthType> {
-    const response = await this.authService.validateUser(data);
-    return {
-      user: response.user,
-      token: response.token,
-    };
+    return await this.authService.validateUser(data);
   }
 
   @Get('isTokenValid/:token')

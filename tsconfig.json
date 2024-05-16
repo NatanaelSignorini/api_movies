@@ -16,13 +16,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@apiBase/modules/*": ["src/modules/*"],
-      "@apiBase/common/*": ["src/common/*"],
-      "@apiBase/config/*": ["src/config/*"],
-      "@apiBase/decorators/*": ["src/common/decorators/*"]
-    }
+    "noFallthroughCasesInSwitch": false
   },
   "exclude": ["node_modules", "dist", "static"],
   "include": ["src/**/*", "src/**/*.json"]

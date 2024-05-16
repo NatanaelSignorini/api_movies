@@ -1,6 +1,6 @@
-import type { RolesEnum } from '@apiBase/modules/users/enum/role.enum';
 import type { CustomDecorator } from '@nestjs/common';
 import { SetMetadata } from '@nestjs/common';
+import type { RolesEnum } from 'src/modules/users/enum/role.enum';
 
 export type RoleType = keyof typeof RolesEnum | 'ANY';
 

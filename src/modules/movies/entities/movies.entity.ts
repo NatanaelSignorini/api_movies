@@ -1,17 +1,14 @@
-import { BaseEntity } from '@apiBase/modules/bases/entities/base.entity';
+import { BaseEntity } from 'src/modules/bases/entities/base.entity';
 import { Column, Entity } from 'typeorm';
 import { GenreEnum } from '../enum/genre.enum';
 
 @Entity()
 export class Movies extends BaseEntity {
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', unique: true, nullable: false })
   title: string;
 
-  @Column({ type: 'date', nullable: true })
-  year?: Date;
-
   @Column({ type: 'varchar', nullable: true })
-  rated?: string;
+  year?: string;
 
   @Column({ type: 'date', nullable: true })
   released?: Date;
@@ -23,22 +20,8 @@ export class Movies extends BaseEntity {
     name: 'genre',
     type: 'enum',
     enum: GenreEnum,
+    array: true,
     nullable: true,
   })
   genre?: GenreEnum[];
-
-  @Column({ type: 'varchar', nullable: true })
-  director?: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  writer?: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  actors?: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  plot?: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  poster?: string;
 }

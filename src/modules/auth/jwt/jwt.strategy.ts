@@ -1,8 +1,8 @@
-import type { Users } from '@apiBase/modules/users/entities/users.entity';
-import { UsersService } from '@apiBase/modules/users/users.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import type { Users } from 'src/modules/users/entities/users.entity';
+import { UsersService } from 'src/modules/users/users.service';
 import * as consts from './../../../common/constants/error.constants';
 
 @Injectable()

@@ -1,5 +1,5 @@
-import { encodePassword } from '@apiBase/common/decorators/encode-password';
-import { BaseEntity } from '@apiBase/modules/bases/entities/base.entity';
+import { encodePassword } from 'src/common/decorators/encode-password';
+import { BaseEntity } from 'src/modules/bases/entities/base.entity';
 import { BeforeInsert, Column, Entity } from 'typeorm';
 import { RolesEnum } from '../enum/role.enum';
 

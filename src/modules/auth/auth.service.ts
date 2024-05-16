@@ -5,6 +5,7 @@ import type { Users } from '../users/entities/users.entity';
 import { UsersService } from '../users/users.service';
 import * as consts from './../../common/constants/error.constants';
 
+import type { UserDTO } from '../users/dto/user.dto';
 import type { AuthInput } from './dto/auth.input';
 import type { AuthType, TokenValidType } from './dto/auth.type';
 
@@ -37,8 +38,17 @@ export class AuthService {
     const token = await this.jwtToken(user);
     this.userService.updateLastLogin(user.id);
 
+    const userDto: UserDTO = {
+      id: user.id,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+      email: user.email,
+      lastLogin: user.lastLogin,
+    };
+
     return {
-      user,
+      user: userDto,
       token,
     };
   }

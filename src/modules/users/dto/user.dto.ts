@@ -1,4 +1,4 @@
-import { BaseDTO } from '@apiBase/modules/bases/dto/base.dto';
+import { BaseDTO } from 'src/modules/bases/dto/base.dto';
 
 export class UserDTO extends BaseDTO {
   email?: string;

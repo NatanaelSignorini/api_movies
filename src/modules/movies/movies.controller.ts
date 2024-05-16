@@ -7,23 +7,19 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Users } from '../users/entities/users.entity';
 
 import { CreateMovieInput } from './dto/create-movie.input.dto';
+import type { MoviesDTO } from './dto/movies.dto';
 import { UpdateMovieInput } from './dto/update-movie.input.dto';
 import { Movies } from './entities/movies.entity';
 import { MoviesService } from './movies.service';
 
-@ApiBearerAuth()
 @ApiTags('movies')
 @Controller('movies')
+// @UseInterceptors(CacheInterceptor)
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
@@ -34,7 +30,7 @@ export class MoviesController {
     description: 'The found record',
     type: Users,
   })
-  async getMoviesAll(): Promise<any> {
+  async getMoviesAll(): Promise<MoviesDTO[]> {
     return this.moviesService.findAllMovies();
   }
 
@@ -45,14 +41,14 @@ export class MoviesController {
     description: 'The found record',
     type: Movies,
   })
-  async getMovieById(@Param('id') id: string): Promise<any> {
+  async getMovieById(@Param('id') id: string): Promise<MoviesDTO> {
     return this.moviesService.getMovieById(id);
   }
 
   @Post()
   @ApiOperation({ summary: 'Create Movie' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  async createMovie(@Body() data: CreateMovieInput): Promise<Users> {
+  async createMovie(@Body() data: CreateMovieInput): Promise<MoviesDTO> {
     return this.moviesService.createMovie(data);
   }
 
@@ -62,7 +58,7 @@ export class MoviesController {
   async updateMovie(
     @Param('id') id: string,
     @Body() data: UpdateMovieInput,
-  ): Promise<any> {
+  ): Promise<MoviesDTO> {
     return this.moviesService.updateMovie(id, data);
   }
 

@@ -1,6 +1,5 @@
-import { Users } from '@apiBase/modules/users/entities/users.entity';
-import { RolesEnum } from '@apiBase/modules/users/enum/role.enum';
-
+import { Users } from 'src/modules/users/entities/users.entity';
+import { RolesEnum } from 'src/modules/users/enum/role.enum';
 import type { MigrationInterface, QueryRunner } from 'typeorm';
 
 const users = [{ email: 'admin@admin.com.br', password: 'adm@adm' }];

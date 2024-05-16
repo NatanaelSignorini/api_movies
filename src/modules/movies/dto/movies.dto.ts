@@ -1,32 +1,14 @@
-import { BaseDTO } from '@apiBase/modules/bases/dto/base.dto';
+import { BaseDTO } from 'src/modules/bases/dto/base.dto';
 import type { GenreEnum } from '../enum/genre.enum';
 
 export class MoviesDTO extends BaseDTO {
-  title: string;
+  title?: string;
 
-  year: string;
+  year?: string;
 
-  rated?: string;
-
-  released?: string;
+  released?: Date;
 
   runtime?: string;
 
-  genre: GenreEnum;
-
-  director?: string;
-
-  writer?: string;
-
-  actors?: string;
-
-  plot?: string;
-
-  language?: string;
-
-  country?: string;
-
-  awards?: string;
-
-  poster?: string;
+  genre?: GenreEnum[];
 }

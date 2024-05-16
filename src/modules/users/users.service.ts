@@ -31,8 +31,17 @@ export class UsersService {
   }
 
   async findAllUsers(): Promise<UserDTO[]> {
-    const users = await this.userRepository.find();
-    return users;
+    const userData: UserDTO[] = await this.userRepository.find();
+
+    const userDTO: UserDTO[] = userData.map((user) => ({
+      id: user.id,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+      email: user.email,
+      lastLogin: user.lastLogin,
+    }));
+    return userDTO;
   }
 
   async getUserById(id: string): Promise<UserDTO> {
@@ -40,11 +49,17 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(consts.USER_NOT_FOUND);
     }
-    return user;
+    return {
+      id: user.id,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+      email: user.email,
+      lastLogin: user.lastLogin,
+    };
   }
 
   async createUser(data: CreateUserInput): Promise<UserDTO> {
-    console.log('data', data);
     const foundUser = await this.userRepository.findOne({
       where: [{ email: data.email }],
     });
@@ -58,11 +73,18 @@ export class UsersService {
     const userSaved = await this.userRepository.save(user);
     if (!userSaved) {
       throw new InternalServerErrorException(
-        'Problem to create a user. Try again',
+        'Problem to create a User. Try again',
       );
     }
 
-    return userSaved;
+    return {
+      id: userSaved.id,
+      createdAt: userSaved.createdAt,
+      updatedAt: userSaved.updatedAt,
+      deletedAt: userSaved.deletedAt,
+      email: userSaved.email,
+      lastLogin: userSaved.lastLogin,
+    };
   }
 
   async updateUser(id: string, data: UpdateUserInput): Promise<UserDTO> {
@@ -80,7 +102,14 @@ export class UsersService {
       ...buildUser,
     });
 
-    return userSaved;
+    return {
+      id: userSaved.id,
+      createdAt: userSaved.createdAt,
+      updatedAt: userSaved.updatedAt,
+      deletedAt: userSaved.deletedAt,
+      email: userSaved.email,
+      lastLogin: userSaved.lastLogin,
+    };
   }
 
   async deleteUser(id: string): Promise<boolean> {
