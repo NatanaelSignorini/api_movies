@@ -2,8 +2,8 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CacheConfig } from './config/cacheConfig';
 import { DataBaseConfig } from './config/dataBaseConfig';
+import { RedisOptions } from './config/redisOptions';
 import { AuthModule } from './modules/auth/auth.module';
 import { MoviesModule } from './modules/movies/movies.module';
 import { UsersModule } from './modules/users/users.module';
@@ -15,11 +15,7 @@ import { UsersModule } from './modules/users/users.module';
       imports: [ConfigModule],
       useClass: DataBaseConfig,
     }),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      imports: [ConfigModule],
-      useClass: CacheConfig,
-    }),
+    CacheModule.registerAsync(RedisOptions),
     AuthModule,
     UsersModule,
     MoviesModule,

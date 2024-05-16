@@ -1,4 +1,5 @@
 import {
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -9,6 +10,8 @@ import { Repository } from 'typeorm';
 
 import * as consts from './../../common/constants/error.constants';
 
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import type { CreateMovieInput } from './dto/create-movie.input.dto';
 import type { MoviesDTO } from './dto/movies.dto';
 import type { UpdateMovieInput } from './dto/update-movie.input.dto';
@@ -18,16 +21,16 @@ import { GenreEnum } from './enum/genre.enum';
 @Injectable()
 export class MoviesService {
   constructor(
-    // @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectRepository(Movies)
     public moviesRepository: Repository<Movies>,
   ) {}
 
   async findAllMovies(): Promise<MoviesDTO[]> {
-    // const cacheDataMovies = await this.cacheManager.get<MoviesDTO[]>('movies');
-    // if (cacheDataMovies) {
-    //   return cacheDataMovies;
-    // }
+    const cacheDataMovies = await this.cacheManager.get<MoviesDTO[]>('movies');
+    if (cacheDataMovies) {
+      return cacheDataMovies;
+    }
     const moviesData = await this.moviesRepository.find();
     const moviesDTOData: MoviesDTO[] = moviesData.map((movie) => ({
       id: movie.id,
@@ -40,7 +43,7 @@ export class MoviesService {
       runtime: movie.runtime,
       genre: movie.genre,
     }));
-    // await this.cacheManager.set('movies', moviesDTOData);
+    await this.cacheManager.set('movies', moviesDTOData, 10 * 1000);
     return moviesDTOData;
   }
 
