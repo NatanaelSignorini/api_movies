@@ -9,13 +9,12 @@ export class SeedAdmin1713228409326 implements MigrationInterface {
       users.map(async (user) => {
         const UserRepo = queryRunner.connection.getRepository(Users);
 
-        const admin = UserRepo.create({
+        const userRepo = UserRepo.create({
           email: user.email,
           password: user.password,
+          roles: RolesEnum.ADMIN,
         });
-
-        admin.roles = RolesEnum.ADMIN;
-        await UserRepo.save(admin);
+        await UserRepo.save(userRepo);
       }),
     );
   }

@@ -6,20 +6,19 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import * as consts from './../../common/constants/error.constants';
 
-import type { UpdateMovieInput } from './dto/update-movie.input.dto';
-
 import type { CreateMovieInput } from './dto/create-movie.input.dto';
-import { Movies } from './entities/movies.entity';
-
 import type { MoviesDTO } from './dto/movies.dto';
+import type { UpdateMovieInput } from './dto/update-movie.input.dto';
+import { Movies } from './entities/movies.entity';
 import { GenreEnum } from './enum/genre.enum';
 
 @Injectable()
 export class MoviesService {
   constructor(
-    // @Inject('CACHE_MANAGER') private cacheManager: Cache,
+    // @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectRepository(Movies)
     public moviesRepository: Repository<Movies>,
   ) {}
