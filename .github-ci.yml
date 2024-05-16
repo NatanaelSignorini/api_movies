@@ -1,0 +1,79 @@
+stages:
+    - build
+    - test
+    - deploy_prod
+
+cache:
+    paths:
+        - node_modules/
+
+build:
+    stage: build
+    image: node:20.9.0
+    tags:
+        - gitlab-org
+    script:
+        - yarn install
+        - yarn build
+    artifacts:
+        name: "${CI_BUILD_REF}"
+        expire_in: 40 mins
+        paths:
+            - node_modules
+    only:
+        refs:
+            - merge_requests
+        variables:
+            - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+
+test:
+    stage: test
+    image: node:20.9.0
+    services:
+        - name: postgres:16-alpine
+          alias: db
+        - name: redis:alpine
+          alias: redis
+    variables:
+        REDIS_HOST: redis
+        REDIS_PORT: 6379
+        POSTGRES_DB: api_movies_db_test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        DB_HOST_TEST: db
+        DB_NAME_TEST: api_movies_db_test
+        DB_USERNAME_TEST: postgres
+        DB_PASSWORD_TEST: postgres
+        DB_PORT_TEST: 5432
+        DB_SSL_TEST: 'false'
+        JWT_SECRET: jwt_secret
+        INTERVAL_TIME_FROM_PREV_LOCATION_IN_SECONDS: 1800
+    tags:
+      - gitlab-org
+    script:
+      - yarn test:unit --runInBand
+      - yarn test:integration
+      - yarn test:e2e --forceExit
+    only:
+        refs:
+            - merge_requests
+
+
+
+deploy_prod:
+    stage: deploy_prod
+    image: node:20.9.0
+    tags:
+        - gitlab-org
+    script:
+        - 'which ssh-agent || ( apt-get install openssh-client git -y )'
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - ssh-keyscan "$SERVER" >> ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+        # - ssh "$SERVER" /application/smartbus-prati/deploy_api.sh
+    only:
+        - main

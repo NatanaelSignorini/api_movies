@@ -2,27 +2,27 @@ version: '3.7'
 
 services:
   api:
+    restart: always
     container_name: api_movies
     build:
       context: .
-      dockerfile: Dockerfile
-      target: development
+      dockerfile: Dockerfile.prod
+      target: production
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./uploads:/usr/src/app/uploads
     ports:
       - 127.0.0.1:${API_PORT}:${API_PORT}
     env_file:
       - .env
-    networks:
-      - backend
+    command: sh -c "yarn start:prod"
     depends_on:
       - postgres
       - redis
 
   redis:
+    restart: always
     container_name: api_movies_redis
-    image: redis:alpine
+    image: redis
     ports:
       - 127.0.0.1:6379:6379
     env_file:
