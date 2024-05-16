@@ -14,7 +14,7 @@ services:
       - 127.0.0.1:${API_PORT}:${API_PORT}
     env_file:
       - .env
-    command: sh -c "yarn start:prod"
+    command: sh -c "yarn db:run && yarn start:prod"
     depends_on:
       - postgres
       - redis
@@ -22,7 +22,7 @@ services:
   redis:
     restart: always
     container_name: api_movies_redis
-    image: redis
+    image: redis:alpine
     ports:
       - 127.0.0.1:6379:6379
     env_file:
