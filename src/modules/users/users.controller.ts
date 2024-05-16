@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -14,6 +15,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { JwtAuthGuard } from '../auth/guard/jwt.guard';
 import { CreateUserInput } from './dto/create-user.input.dto';
 import { UpdateUserInput } from './dto/update-user.input.dto';
 import type { UserDTO } from './dto/user.dto';
@@ -26,6 +29,8 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Roles('ADMIN')
+  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiOperation({ summary: 'Get Users All' })
   @ApiResponse({
@@ -37,6 +42,8 @@ export class UsersController {
     return this.usersService.findAllUsers();
   }
 
+  @Roles('ADMIN')
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   @ApiOperation({ summary: 'Get User for id' })
   @ApiResponse({
@@ -48,6 +55,8 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
+  @Roles('ANY')
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: 'Create User' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -55,6 +64,8 @@ export class UsersController {
     return this.usersService.createUser(data);
   }
 
+  @Roles('ADMIN', 'USER')
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @ApiOperation({ summary: 'Update User' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -65,6 +76,8 @@ export class UsersController {
     return this.usersService.updateUser(id, data);
   }
 
+  @Roles('ADMIN', 'USER')
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete User' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
