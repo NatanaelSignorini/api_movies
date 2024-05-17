@@ -25,6 +25,9 @@ export class DataBaseConfig implements TypeOrmOptionsFactory {
       extra: {
         max: 30,
       },
+      ssl: {
+        rejectUnauthorized: false,
+      },
     };
   }
 }
