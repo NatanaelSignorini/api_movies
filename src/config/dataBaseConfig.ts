@@ -23,7 +23,7 @@ export class DataBaseConfig implements TypeOrmOptionsFactory {
       entities: [join(__dirname, '../**/**/*entity{.ts,.js}')],
       // entities: ['dist/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      migrationsRun: true,
+      migrationsRun: false,
       migrations: [join(__dirname, '../migrations/**/*{.ts,.js}')],
       // migrations: ['dist/**/migrations/*{.ts,.js}'],
       migrationsTableName: 'migrations',
